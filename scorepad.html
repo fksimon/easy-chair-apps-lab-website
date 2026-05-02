@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ScorePad — Score fast. Play more. The minimal scorekeeping app for any tabletop or card game. iOS &amp; iPadOS." />
+  <title>ScorePad | Easy Chair Apps Lab</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* =====================================================
+       SCOREPAD PAGE
+       ===================================================== */
+
+    .sp-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Hero */
+    .sp-hero {
+      width: 100%;
+      text-align: center;
+      padding: 4rem 1.5rem 3.5rem;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sp-hero::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 720px;
+      height: 720px;
+      background: radial-gradient(
+        circle,
+        rgba(123, 63, 228, 0.18) 0%,
+        rgba(46, 197, 211, 0.08) 45%,
+        transparent 70%
+      );
+      filter: blur(70px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .sp-hero > * { position: relative; z-index: 1; }
+
+    .sp-app-icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.5s ease-out both;
+      animation-delay: 0.1s;
+    }
+
+    .sp-app-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sp-title {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 6vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+      animation: fadeUp 0.5s ease-out both;
+      animation-delay: 0.2s;
+    }
+
+    .sp-tagline {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+      color: var(--ink-soft);
+      margin-bottom: 0.4rem;
+      animation: fadeUp 0.5s ease-out both;
+      animation-delay: 0.3s;
+    }
+
+    .sp-sub-tagline {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 380px;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.5s ease-out both;
+      animation-delay: 0.4s;
+    }
+
+    .sp-store-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--ink);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 13px;
+      padding: 0.7rem 1.4rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: opacity 200ms ease, transform 200ms ease;
+      animation: fadeUp 0.5s ease-out both;
+      animation-delay: 0.5s;
+    }
+
+    .sp-store-btn:hover {
+      opacity: 0.8;
+      transform: translateY(-1px);
+    }
+
+    .sp-store-btn svg {
+      flex-shrink: 0;
+    }
+
+    .sp-store-btn-text {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      line-height: 1.2;
+    }
+
+    .sp-store-btn-text small {
+      font-size: 0.7rem;
+      font-weight: 400;
+      opacity: 0.75;
+      letter-spacing: 0.02em;
+    }
+
+    .sp-store-btn-text strong {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .sp-coming-soon-note {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+      animation: fadeUp 0.5s ease-out both;
+      animation-delay: 0.6s;
+    }
+
+    /* Sections */
+    .sp-section {
+      width: 100%;
+      max-width: 800px;
+      padding: 0 1.5rem 4rem;
+    }
+
+    .sp-section-title {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--border);
+      position: relative;
+    }
+
+    .sp-section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 48px;
+      height: 2px;
+      background: var(--grad);
+    }
+
+    /* Feature cards */
+    .sp-features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .sp-feature-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 200ms ease, box-shadow 200ms ease;
+    }
+
+    .sp-feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--grad);
+    }
+
+    .sp-feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-violet);
+    }
+
+    .sp-feature-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--grad);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-bottom: 0.2rem;
+    }
+
+    .sp-feature-icon svg {
+      color: #fff;
+    }
+
+    .sp-feature-card h3 {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .sp-feature-card p {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    /* Why section */
+    .sp-why-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .sp-why-item {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      transition: box-shadow 200ms ease;
+    }
+
+    .sp-why-item:hover {
+      box-shadow: var(--shadow-violet);
+    }
+
+    .sp-why-num {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 700;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      flex-shrink: 0;
+      width: 1.6rem;
+      text-align: right;
+    }
+
+    .sp-why-item h3 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+
+    .sp-why-item p {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      line-height: 1.65;
+    }
+
+    /* Privacy callout */
+    .sp-privacy {
+      background: linear-gradient(135deg, rgba(123, 63, 228, 0.06) 0%, rgba(46, 197, 211, 0.06) 100%);
+      border: 1px solid rgba(123, 63, 228, 0.15);
+      border-radius: 16px;
+      padding: 2rem 2.25rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .sp-privacy-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--grad);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sp-privacy h2 {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .sp-privacy p {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      max-width: 460px;
+      line-height: 1.7;
+    }
+
+    /* Tip jar */
+    .sp-tip {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      line-height: 1.7;
+    }
+
+    .sp-tip strong {
+      color: var(--ink);
+    }
+
+    /* Responsive */
+    @media (max-width: 720px) {
+      .sp-features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .sp-features {
+        grid-template-columns: 1fr;
+      }
+
+      .sp-privacy {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="legal-header">
+    <a href="index.html">
+      <img src="logo.png" alt="Easy Chair Apps Lab" />
+    </a>
+  </header>
+
+  <main class="sp-main">
+
+    <!-- Hero -->
+    <section class="sp-hero">
+      <div class="sp-app-icon">
+        <img src="scorepad/icon.png" alt="ScorePad app icon" />
+      </div>
+      <h1 class="sp-title">ScorePad</h1>
+      <p class="sp-tagline">Score fast. Play more.</p>
+      <p class="sp-sub-tagline">The minimal scorekeeping app that stays out of your way.</p>
+      <a href="#" class="sp-store-btn" aria-label="Download on the App Store">
+        <!-- Apple logo -->
+        <svg width="22" height="27" viewBox="0 0 814 1000" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-37.5-150.3-88.5l-10.2-12.8c-52.5-64.3-101.1-143.3-117.9-220.9-8.4-38.5-12.8-76.3-12.8-113.5 0-149.6 98.4-228.9 194.7-228.9 51.9 0 95.2 33.5 127.4 33.5 30.8 0 79.4-35.5 138.4-35.5 22.1 0 98.6 2 157.5 64.6zM547.3 79.6C571 50.6 588.5 10.1 588.5 0c0-2.5-.3-5.1-.6-7.7-.3-2.6 0 0 0 0-23.8 2.9-51.5 16.6-71.3 37.3C497.7 51.2 478 91.7 478 131.6c0 2.9.3 5.8.6 8.7 2.9.3 6.1.6 9.3.6 22.4 0 47.8-12.5 59.4-61.3z"/>
+        </svg>
+        <span class="sp-store-btn-text">
+          <small>Download on the</small>
+          <strong>App Store</strong>
+        </span>
+      </a>
+      <p class="sp-coming-soon-note">Coming soon &mdash; link active at launch</p>
+    </section>
+
+    <!-- Features -->
+    <section class="sp-section">
+      <h2 class="sp-section-title">Features</h2>
+      <div class="sp-features">
+
+        <div class="sp-feature-card">
+          <div class="sp-feature-icon">
+            <!-- Grid icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+            </svg>
+          </div>
+          <h3>Two Scoring Modes</h3>
+          <p>Round-by-round grid entry for structured games like Catan or Hearts, or quick +/- steppers for running totals like darts or bowling.</p>
+        </div>
+
+        <div class="sp-feature-card">
+          <div class="sp-feature-icon">
+            <!-- Sparkle/suggest icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6M8 11h6"/>
+            </svg>
+          </div>
+          <h3>Smart Auto-Suggest</h3>
+          <p>Start typing a game or player name and ScorePad fills in past records instantly. No retyping regulars.</p>
+        </div>
+
+        <div class="sp-feature-card">
+          <div class="sp-feature-icon">
+            <!-- Clock icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>
+            </svg>
+          </div>
+          <h3>Full History</h3>
+          <p>Every session is saved automatically. Tap any past game to review the complete scoresheet with all rounds.</p>
+        </div>
+
+        <div class="sp-feature-card">
+          <div class="sp-feature-icon">
+            <!-- Bar chart icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+              <rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="4" width="4" height="17" rx="1"/>
+            </svg>
+          </div>
+          <h3>Stats</h3>
+          <p>Games-per-month charts, top games and players by play count, and a most-recent sessions list — all without leaving the app.</p>
+        </div>
+
+        <div class="sp-feature-card">
+          <div class="sp-feature-icon">
+            <!-- Dice icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5" fill="white"/><circle cx="15.5" cy="8.5" r="1.5" fill="white"/><circle cx="8.5" cy="15.5" r="1.5" fill="white"/><circle cx="15.5" cy="15.5" r="1.5" fill="white"/>
+            </svg>
+          </div>
+          <h3>Random Start Picker</h3>
+          <p>Everyone places a finger on screen. After a countdown, one finger lights up at random. No arguments about who goes first.</p>
+        </div>
+
+        <div class="sp-feature-card">
+          <div class="sp-feature-icon">
+            <!-- Person icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="7" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+            </svg>
+          </div>
+          <h3>Player Profiles</h3>
+          <p>Persistent player profiles with full play history. The same name resolves to the same player every time.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Why ScorePad -->
+    <section class="sp-section">
+      <h2 class="sp-section-title">Why ScorePad?</h2>
+      <div class="sp-why-list">
+
+        <div class="sp-why-item">
+          <span class="sp-why-num">1</span>
+          <div>
+            <h3>Minimal time away from the table</h3>
+            <p>The setup form is one screen; scoring is one more. No onboarding, no sign-in, no tutorial popups.</p>
+          </div>
+        </div>
+
+        <div class="sp-why-item">
+          <span class="sp-why-num">2</span>
+          <div>
+            <h3>Two modes, one app</h3>
+            <p>Most scorekeeping apps pick one style. ScorePad handles both round-based grids and running +/- totals.</p>
+          </div>
+        </div>
+
+        <div class="sp-why-item">
+          <span class="sp-why-num">3</span>
+          <div>
+            <h3>Remembers everything, asks nothing</h3>
+            <p>Game names, player names, round counts &mdash; all reused automatically on the next play.</p>
+          </div>
+        </div>
+
+        <div class="sp-why-item">
+          <span class="sp-why-num">4</span>
+          <div>
+            <h3>Completely private</h3>
+            <p>No analytics SDK, no network requests, no account. All data lives on-device with SwiftData. The privacy manifest confirms zero data collection.</p>
+          </div>
+        </div>
+
+        <div class="sp-why-item">
+          <span class="sp-why-num">5</span>
+          <div>
+            <h3>Any game, any group</h3>
+            <p>Card games, board games, dice games, darts, bowling, mini-golf &mdash; anything with players and scores.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Privacy callout -->
+    <section class="sp-section">
+      <div class="sp-privacy">
+        <div class="sp-privacy-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h2>No account. No ads. No tracking.</h2>
+        <p>Your scores stay on your device. ScorePad has no network requests, no analytics, and no sign-in. What happens at game night stays at game night.</p>
+      </div>
+    </section>
+
+    <!-- Tip jar -->
+    <div class="sp-tip">
+      <strong>ScorePad is free.</strong> If it saves your game night, a small tip keeps it going.
+    </div>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Easy Chair Apps Lab, LLC. All rights reserved.</p>
+    <p style="margin-top:0.5rem;">
+      <a href="index.html">Home</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="support.html">Support</a>
+    </p>
+  </footer>
+
+</body>
+</html>
