@@ -279,6 +279,35 @@ body {
   margin-bottom: 0.5rem;
 }
 
+.app-card-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--violet);
+  text-decoration: none;
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 0.3rem 0;
+  position: relative;
+}
+
+.app-card-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--violet);
+  transition: width 200ms ease;
+}
+
+.app-card-link:hover::after {
+  width: 100%;
+}
+
 .app-coming-soon {
   display: inline-flex;
   align-items: center;
