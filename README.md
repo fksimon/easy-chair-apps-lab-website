@@ -74,5 +74,6 @@ The skill will:
 1. Create `myapp.html` — a full detail page modeled on the existing app pages, with all content derived from `MARKETING.md`
 2. Add an app card to `index.html`
 3. Register the new app in `.claude/commands/update-app-pages.md` so future `/update-app-pages` runs include it
+4. Copy the app icon automatically — searches the source project for the Xcode `AppIcon.appiconset` (picking the largest PNG), falls back to any root-level icon file, and places it at `myapp/icon.png`
 
-After running, place the app icon at `myapp/icon.png` and update the App Store URL in the hero once the app is live. The skill definition lives at `.claude/commands/add-app.md`.
+The only manual step after running is updating the App Store URL in the hero once the app is live. The skill definition lives at `.claude/commands/add-app.md`.
