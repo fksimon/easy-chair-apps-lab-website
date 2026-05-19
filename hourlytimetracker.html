@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Hourly Time Tracker &mdash; Track your hours. Know where you stand. The simple time tracker for hourly workers, contractors, and anyone paid by the hour. iPhone." />
+  <title>Hourly Time Tracker | Easy Chair Apps Lab</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* =====================================================
+       HOURLY TIME TRACKER PAGE
+       ===================================================== */
+
+    .htt-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Hero */
+    .htt-hero {
+      width: 100%;
+      text-align: center;
+      padding: 4rem 1.5rem 3.5rem;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .htt-hero::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 720px;
+      height: 720px;
+      background: radial-gradient(
+        circle,
+        rgba(123, 63, 228, 0.18) 0%,
+        rgba(46, 197, 211, 0.08) 45%,
+        transparent 70%
+      );
+      filter: blur(70px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .htt-hero > * { position: relative; z-index: 1; }
+
+    .htt-app-icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.5s ease-out both;
+      animation-delay: 0.1s;
+    }
+
+    .htt-app-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .htt-title {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 6vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+      animation: fadeUp 0.5s ease-out both;
+      animation-delay: 0.2s;
+    }
+
+    .htt-tagline {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+      color: var(--ink-soft);
+      margin-bottom: 0.4rem;
+      animation: fadeUp 0.5s ease-out both;
+      animation-delay: 0.3s;
+    }
+
+    .htt-sub-tagline {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 380px;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.5s ease-out both;
+      animation-delay: 0.4s;
+    }
+
+    .htt-platform-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--ink-soft);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0.2rem 0.75rem;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.5s ease-out both;
+      animation-delay: 0.45s;
+    }
+
+    .htt-store-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--ink);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 13px;
+      padding: 0.7rem 1.4rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: opacity 200ms ease, transform 200ms ease;
+      animation: fadeUp 0.5s ease-out both;
+      animation-delay: 0.5s;
+    }
+
+    .htt-store-btn:hover {
+      opacity: 0.8;
+      transform: translateY(-1px);
+    }
+
+    .htt-store-btn svg {
+      flex-shrink: 0;
+    }
+
+    .htt-store-btn-text {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      line-height: 1.2;
+    }
+
+    .htt-store-btn-text small {
+      font-size: 0.7rem;
+      font-weight: 400;
+      opacity: 0.75;
+      letter-spacing: 0.02em;
+    }
+
+    .htt-store-btn-text strong {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .htt-coming-soon-note {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+      animation: fadeUp 0.5s ease-out both;
+      animation-delay: 0.6s;
+    }
+
+    /* Sections */
+    .htt-section {
+      width: 100%;
+      max-width: 800px;
+      padding: 0 1.5rem 4rem;
+    }
+
+    .htt-section-title {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--border);
+      position: relative;
+    }
+
+    .htt-section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 48px;
+      height: 2px;
+      background: var(--grad);
+    }
+
+    /* Feature cards */
+    .htt-features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .htt-feature-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 200ms ease, box-shadow 200ms ease;
+    }
+
+    .htt-feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--grad);
+    }
+
+    .htt-feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-violet);
+    }
+
+    .htt-feature-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--grad);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-bottom: 0.2rem;
+    }
+
+    .htt-feature-icon svg {
+      color: #fff;
+    }
+
+    .htt-feature-card h3 {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .htt-feature-card p {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    /* Why section */
+    .htt-why-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .htt-why-item {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      transition: box-shadow 200ms ease;
+    }
+
+    .htt-why-item:hover {
+      box-shadow: var(--shadow-violet);
+    }
+
+    .htt-why-num {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 700;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      flex-shrink: 0;
+      width: 1.6rem;
+      text-align: right;
+    }
+
+    .htt-why-item h3 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+
+    .htt-why-item p {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      line-height: 1.65;
+    }
+
+    /* Privacy callout */
+    .htt-privacy {
+      background: linear-gradient(135deg, rgba(123, 63, 228, 0.06) 0%, rgba(46, 197, 211, 0.06) 100%);
+      border: 1px solid rgba(123, 63, 228, 0.15);
+      border-radius: 16px;
+      padding: 2rem 2.25rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .htt-privacy-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--grad);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .htt-privacy h2 {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .htt-privacy p {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      max-width: 460px;
+      line-height: 1.7;
+    }
+
+    /* Tip jar */
+    .htt-tip {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      line-height: 1.7;
+    }
+
+    .htt-tip strong {
+      color: var(--ink);
+    }
+
+    /* Responsive */
+    @media (max-width: 720px) {
+      .htt-features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .htt-features {
+        grid-template-columns: 1fr;
+      }
+
+      .htt-privacy {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="legal-header">
+    <a href="index.html">
+      <img src="logo.png" alt="Easy Chair Apps Lab" />
+    </a>
+  </header>
+
+  <main class="htt-main">
+
+    <!-- Hero -->
+    <section class="htt-hero">
+      <div class="htt-app-icon">
+        <img src="hourlytimetracker/icon.png" alt="Hourly Time Tracker app icon" />
+      </div>
+      <h1 class="htt-title">Hourly Time Tracker</h1>
+      <p class="htt-tagline">Track your hours. Know where you stand.</p>
+      <p class="htt-sub-tagline">The simple time tracker for hourly workers, contractors, and anyone paid by the hour.</p>
+      <span class="htt-platform-badge">iPhone</span>
+      <a href="#" class="htt-store-btn" aria-label="Download on the App Store">
+        <!-- Apple logo -->
+        <svg width="22" height="27" viewBox="0 0 814 1000" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-37.5-150.3-88.5l-10.2-12.8c-52.5-64.3-101.1-143.3-117.9-220.9-8.4-38.5-12.8-76.3-12.8-113.5 0-149.6 98.4-228.9 194.7-228.9 51.9 0 95.2 33.5 127.4 33.5 30.8 0 79.4-35.5 138.4-35.5 22.1 0 98.6 2 157.5 64.6zM547.3 79.6C571 50.6 588.5 10.1 588.5 0c0-2.5-.3-5.1-.6-7.7-.3-2.6 0 0 0 0-23.8 2.9-51.5 16.6-71.3 37.3C497.7 51.2 478 91.7 478 131.6c0 2.9.3 5.8.6 8.7 2.9.3 6.1.6 9.3.6 22.4 0 47.8-12.5 59.4-61.3z"/>
+        </svg>
+        <span class="htt-store-btn-text">
+          <small>Download on the</small>
+          <strong>App Store</strong>
+        </span>
+      </a>
+      <p class="htt-coming-soon-note">Coming soon to the App Store.</p>
+    </section>
+
+    <!-- Features -->
+    <section class="htt-section">
+      <h2 class="htt-section-title">Features</h2>
+      <div class="htt-features">
+
+        <div class="htt-feature-card">
+          <div class="htt-feature-icon">
+            <!-- Calendar icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </div>
+          <h3>Monthly Calendar</h3>
+          <p>Tap any day to plan a shift &mdash; set hours, start time, and optional notes. Your whole month at a glance.</p>
+        </div>
+
+        <div class="htt-feature-card">
+          <div class="htt-feature-icon">
+            <!-- Layers icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
+            </svg>
+          </div>
+          <h3>Bulk Entry &amp; Sync</h3>
+          <p>Add multiple planned days in one flow; the editor advances date automatically. Planned shifts sync to your iPhone Calendar with a customisable event title.</p>
+        </div>
+
+        <div class="htt-feature-card">
+          <div class="htt-feature-icon">
+            <!-- Edit icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+          </div>
+          <h3>One-Tap Logging</h3>
+          <p>Tap a day to record actual hours. The editor shows your plan alongside so you can spot the difference at a glance.</p>
+        </div>
+
+        <div class="htt-feature-card">
+          <div class="htt-feature-icon">
+            <!-- Tag icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>
+            </svg>
+          </div>
+          <h3>Time-Off Tagging</h3>
+          <p>Mark days as PTO, Sick, or Holiday from a compact dropdown. Time-off hours are tracked separately and included in per-period totals.</p>
+        </div>
+
+        <div class="htt-feature-card">
+          <div class="htt-feature-icon">
+            <!-- Table/grid icon for period totals -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="9" x2="9" y2="21"/>
+            </svg>
+          </div>
+          <h3>Per-Period Totals</h3>
+          <p>Regular hours, overtime tier 2, overtime tier 3, and PTO computed automatically for every pay period &mdash; no manual math required.</p>
+        </div>
+
+        <div class="htt-feature-card">
+          <div class="htt-feature-icon">
+            <!-- Check-circle icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <h3>Reconcile Periods</h3>
+          <p>Mark a period as reconciled once your payslip confirms it. Reconciled periods get a visual badge and move off your unresolved list.</p>
+        </div>
+
+        <div class="htt-feature-card">
+          <div class="htt-feature-icon">
+            <!-- Mail icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </div>
+          <h3>Email Reports</h3>
+          <p>Send a clean hours summary directly from the app. The email template is fully editable with a token system &mdash; mix and match period dates, hour totals, and a day-by-day breakdown.</p>
+        </div>
+
+        <div class="htt-feature-card">
+          <div class="htt-feature-icon">
+            <!-- Sliders icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>
+            </svg>
+          </div>
+          <h3>Five Overtime Modes</h3>
+          <p>Daily threshold, two-tier daily, weekly, and plan-relative modes cover the most common overtime structures. Configure once and the math takes care of itself.</p>
+        </div>
+
+        <div class="htt-feature-card">
+          <div class="htt-feature-icon">
+            <!-- Bar chart icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/>
+            </svg>
+          </div>
+          <h3>Year-to-Date Reports</h3>
+          <p>Monthly summaries with day-by-day breakdowns, year-to-date running totals, upcoming schedule by period, and a quick list of unreconciled periods.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Why Hourly Time Tracker? -->
+    <section class="htt-section">
+      <h2 class="htt-section-title">Why Hourly Time Tracker?</h2>
+      <div class="htt-why-list">
+
+        <div class="htt-why-item">
+          <span class="htt-why-num">1</span>
+          <div>
+            <h3>Built for your overtime rules, not generic ones</h3>
+            <p>Five modes cover the most common overtime structures: daily threshold, two-tier daily, weekly, or plan-relative. Configure once and forget.</p>
+          </div>
+        </div>
+
+        <div class="htt-why-item">
+          <span class="htt-why-num">2</span>
+          <div>
+            <h3>Plan and log in the same calendar</h3>
+            <p>Most time trackers are log-only. Hourly Time Tracker shows planned and actual side by side so you can spot the gap instantly.</p>
+          </div>
+        </div>
+
+        <div class="htt-why-item">
+          <span class="htt-why-num">3</span>
+          <div>
+            <h3>Private by design</h3>
+            <p>No analytics SDK, no crash reporting, no advertising identifiers. All data lives in your private iCloud account &mdash; not on any server.</p>
+          </div>
+        </div>
+
+        <div class="htt-why-item">
+          <span class="htt-why-num">4</span>
+          <div>
+            <h3>Clean email reports, your way</h3>
+            <p>The email template is fully editable with a token system &mdash; swap in any combination of period dates, hour totals, and a day-by-day breakdown.</p>
+          </div>
+        </div>
+
+        <div class="htt-why-item">
+          <span class="htt-why-num">5</span>
+          <div>
+            <h3>iCloud sync with no setup</h3>
+            <p>Works on every iPhone signed into the same Apple ID. Nothing to configure &mdash; your hours just appear on every device.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Privacy callout -->
+    <section class="htt-section">
+      <div class="htt-privacy">
+        <div class="htt-privacy-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h2>No account. No ads. No tracking.</h2>
+        <p>Your hours stay in your iCloud account. Hourly Time Tracker has no analytics, no crash reporting, and no advertising identifiers. What you work is your business.</p>
+      </div>
+    </section>
+
+    <!-- Tip jar -->
+    <div class="htt-tip">
+      <strong>Hourly Time Tracker is free and ad-free.</strong> If it saves you time &mdash; and arguments with payroll &mdash; the tip jar is always open.
+    </div>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Easy Chair Apps Lab, LLC. All rights reserved.</p>
+    <p style="margin-top:0.5rem;">
+      <a href="index.html">Home</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="support.html">Support</a>
+    </p>
+  </footer>
+
+</body>
+</html>
